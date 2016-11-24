@@ -9,13 +9,15 @@ public class HumanIntellect extends Intellect {
     @Override
     public Command decide(int score) {
         do{
-            System.out.print("Hit/Stand: ");
+            System.out.print("Hit/Stand/Exit: ");
             String s = in.nextLine();
 
             if("hit".startsWith(s.toLowerCase())){
                 return Command.HIT;
-            }else if("stand".startsWith(s.toLowerCase())){
+            }else if("stand".startsWith(s.toLowerCase())) {
                 return Command.STAND;
+            }else if ("exit".startsWith(s.toLowerCase()))  {
+                System.exit(0);
             }else{
                 System.out.println("Command not recognized...");
             }
