@@ -15,7 +15,7 @@ public class Main {
             System.out.println("Do you wan`t another round? (Y/N): ");
             choice = HumanIntellect.in.nextLine();
 
-            if (choice.equals("Y")) t.clear();
+            if ("yes".startsWith(choice.toLowerCase())) t.clear();
             else System.exit(0);
         }
 
