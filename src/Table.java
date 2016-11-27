@@ -38,24 +38,38 @@ public class Table {
 
     public void pay() {
 
+        checkRate(); // проверка на то, есть ли деньги у игроков
+
         System.out.println("Enter value...");
         int money = HumanIntellect.in.nextInt();
 
+
+
         if (money <= 0) System.exit(-1); // защита от "дурака"
+
 
         for (Player player: players) {
             if (!(player instanceof Dealer)) {
 
-                if (player instanceof Computer)
-                    player.hand.setComputerRate(player, 200);
+                if (player instanceof Computer) {
+                    // если первый раз инициализируем ставку AI
+                    if (player.hand.getRate() == null)
+                        player.hand.setComputerRate(player, 200);
+                    else {
+                        // каждый раунг сокращает ставку вдвое
+                        int prate = player.hand.getRate().getValueRate();
+                        player.hand.getRate().setRate(prate / 2);
+                    }
+
+                }
 
                 if (player instanceof Human)
                     player.hand.setHumanRate(player, money);
 
-
+                // меняем деньги
                 player.setMoney(player.getMoney() - player.hand.getRate().getValueRate());
 
-
+                // мониторинг
                 System.out.println(player.getName() + " rate: " +
                         player.hand.getRate().getValueRate()
                         + " money: " + player.getMoney());
@@ -64,10 +78,20 @@ public class Table {
 
     }
 
+    // проверка на то, закончились ли у игроков деньги
     public void checkRate() {
         for (Player player: players) {
             if (!(player instanceof Dealer)) {
+                if (player.getMoney() <= 0) {
+                    // мониторинг
+                    System.out.println("Player: " + player.getName() + " have not enought money to play this round (" +
+                    player.getMoney() + " )");
+                    players.remove(player);
 
+                    // если это юзер
+                    if (player instanceof Human)
+                        System.exit(0);
+                }
             }
         }
     }
@@ -82,6 +106,7 @@ public class Table {
 
 
     public void playRound() {
+
         for (Player player : players) {
             Command command;
             do {
@@ -95,7 +120,7 @@ public class Table {
             } while (command != Command.STAND);
         }
 
-        System.out.println(dealer.getName() + " " + dealer.hand.countScore() + " " + dealer.hand);
+        System.out.println("「DEALER GAME」: " + dealer.getName() + " " + dealer.hand.countScore() + " " + dealer.hand);
     }
 
 
