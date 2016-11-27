@@ -9,7 +9,7 @@ public class HumanIntellect extends Intellect {
     @Override
     public Command decide(int score) {
         do{
-            System.out.print("Hit/Stand/Exit: ");
+            System.out.print("Hit/Stand/Exit/Double: ");
             String s = in.nextLine();
 
             if("hit".startsWith(s.toLowerCase())){
