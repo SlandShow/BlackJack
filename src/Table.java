@@ -107,7 +107,20 @@ public class Table {
 
     public void playRound() {
 
+        
         for (Player player : players) {
+            while (true) {
+                System.out.println(player.getName()+" "+player.hand.countScore() + ": " + player.hand);
+                Command command = player.decision();
+                System.out.println(command);
+                if (command == Command.STAND)
+                    break;
+                if (command == Command.HIT)
+                    dealer.deal(player);
+            }
+        }
+
+        /*for (Player player : players) {
             Command command;
             do {
                 System.out.println(player.getName() + " " + player.hand.countScore() + ": " + player.hand);
@@ -120,7 +133,7 @@ public class Table {
             } while (command != Command.STAND);
         }
 
-        System.out.println("「DEALER GAME」: " + dealer.getName() + " " + dealer.hand.countScore() + " " + dealer.hand);
+        System.out.println("「DEALER GAME」: " + dealer.getName() + " " + dealer.hand.countScore() + " " + dealer.hand);*/
     }
 
 
