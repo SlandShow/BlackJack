@@ -38,6 +38,7 @@ public class Table {
 
     public void pay() {
 
+
         System.out.println("Enter value...");
         int money = HumanIntellect.in.nextInt();
 
@@ -51,11 +52,11 @@ public class Table {
                 if (player instanceof Computer) {
                     // если первый раз инициализируем ставку AI
                     if (player.hand.getRate() == null)
-                        player.hand.setComputerRate(player, 200);
+                        player.hand.setComputerRate(player, 400);
                     else {
                         // каждый раунг сокращает ставку вдвое
                         int prate = player.hand.getRate().getValueRate();
-                        player.hand.getRate().setRate(prate / 2);
+                        player.hand.getRate().setRate(prate);
                     }
 
                 }
@@ -82,14 +83,14 @@ public class Table {
         for (Player player: players) {
             if (!(player instanceof Dealer)) {
 
-                // если юзер при ставки получает отрицательный счет денег
+                // если игрок при ставки получает отрицательный счет денег
                 if (player.hand.getRate() != null) {
                     if (player.getMoney() - player.hand.getRate().getValueRate() < 0) {
                         System.out.println("Player: " + player.getName() + " run out of money");
                     }
                 }
 
-                if (player.getMoney() <= 0) {
+                if (player.getMoney() < 0) {
                     // мониторинг
                     System.out.println("Player: " + player.getName() + " have not enought money to play this round (" +
                     player.getMoney() + " )");
