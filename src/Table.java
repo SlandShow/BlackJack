@@ -38,14 +38,11 @@ public class Table {
 
     public void pay() {
 
-        checkRate(); // проверка на то, есть ли деньги у игроков
-
         System.out.println("Enter value...");
         int money = HumanIntellect.in.nextInt();
 
-
-
         if (money <= 0) System.exit(-1); // защита от "дурака"
+
 
 
         for (Player player: players) {
@@ -76,12 +73,22 @@ public class Table {
             }
         }
 
+        checkRate(); // проверка на то, есть ли деньги у игроков
+
     }
 
     // проверка на то, закончились ли у игроков деньги
     public void checkRate() {
         for (Player player: players) {
             if (!(player instanceof Dealer)) {
+
+                // если юзер при ставки получает отрицательный счет денег
+                if (player.hand.getRate() != null) {
+                    if (player.getMoney() - player.hand.getRate().getValueRate() < 0) {
+                        System.out.println("Player: " + player.getName() + " run out of money");
+                    }
+                }
+
                 if (player.getMoney() <= 0) {
                     // мониторинг
                     System.out.println("Player: " + player.getName() + " have not enought money to play this round (" +
@@ -91,6 +98,7 @@ public class Table {
                     // если это юзер
                     if (player instanceof Human)
                         System.exit(0);
+
                 }
             }
         }
@@ -107,7 +115,7 @@ public class Table {
 
     public void playRound() {
 
-        
+
         for (Player player : players) {
             while (true) {
                 System.out.println(player.getName()+" "+player.hand.countScore() + ": " + player.hand);
@@ -132,8 +140,8 @@ public class Table {
                 }
             } while (command != Command.STAND);
         }
-
-        System.out.println("「DEALER GAME」: " + dealer.getName() + " " + dealer.hand.countScore() + " " + dealer.hand);*/
+      */
+        System.out.println("「DEALER GAME」: " + dealer.getName() + " " + dealer.hand.countScore() + " " + dealer.hand);
     }
 
 
