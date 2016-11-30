@@ -74,12 +74,18 @@ public class Table {
             }
         }
 
-        checkRate(); // проверка на то, есть ли деньги у игроков
+
+        try {
+            checkRate(); // проверка на то, есть ли деньги у игроков
+        } catch (Exception e) {
+            System.out.println("Someone left game...");
+        }
 
     }
 
     // проверка на то, закончились ли у игроков деньги
-    public void checkRate() {
+    // может выбрасывать исключение ConcurrentModificationException!
+    public void checkRate() throws Exception {
         for (Player player: players) {
             if (!(player instanceof Dealer)) {
 
